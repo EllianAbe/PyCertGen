@@ -5,6 +5,7 @@ from tkinter import filedialog, messagebox
 
 CERTIFIED_LIST_ENTRY = None
 TEMPLATE_ENTRY = None
+OUTPUT_ENTRY = None
 TO_PDF_METHOD = None
 KEY_AUTOGEN = None
 
@@ -12,22 +13,15 @@ KEY_AUTOGEN = None
 def submit():
     certified_list_path = CERTIFIED_LIST_ENTRY.get()
     template_path = TEMPLATE_ENTRY.get()
+    output_path = OUTPUT_ENTRY.get()
     key_autogen = KEY_AUTOGEN.get()
     to_pdf_method = TO_PDF_METHOD.get()
 
-    generator.gen(certified_list_path, template_path,
+    generator.gen(certified_list_path, template_path, output_path,
                   key_autogen, to_pdf_method)
 
     messagebox.showinfo("Process Finished",
                         "The process finished with success!")
-
-
-root = tk.Tk()
-root.title("PyCertGen")
-root.geometry("400x230")  # Adjust the width as needed
-
-frame = tk.Frame(root)
-frame.pack()
 
 
 def certified_list_manager(frame):
@@ -66,16 +60,33 @@ def template_manager(frame):
     template_browse_button.grid(row=1, column=2, pady=2)
 
 
+def output_manager(frame):
+    global OUTPUT_ENTRY
+
+    output_label = tk.Label(frame, text="Output directory:")
+    output_label.grid(row=2, column=0, sticky='W', pady=2)
+    OUTPUT_ENTRY = tk.Entry(frame)
+    OUTPUT_ENTRY.grid(row=2, column=1, pady=2)
+
+    def browse_template():
+        dirname = filedialog.askdirectory()
+        OUTPUT_ENTRY.insert(tk.END, dirname)
+
+    output_browse_button = tk.Button(
+        frame, text="Browse", command=browse_template)
+    output_browse_button.grid(row=2, column=2, pady=2)
+
+
 def autogen_manager(frame):
     global KEY_AUTOGEN
 
     KEY_AUTOGEN = tk.BooleanVar()
     key_autogen_choice = tk.Checkbutton(
         frame, text="Key Autogen", variable=KEY_AUTOGEN)
-    key_autogen_choice.grid(row=4, column=0, pady=2)
+    key_autogen_choice.grid(row=5, column=0, pady=2)
 
     to_pdf_label = tk.Label(frame, text="To PDF Method:")
-    to_pdf_label.grid(row=2, column=0, pady=2)
+    to_pdf_label.grid(row=3, column=0, pady=2)
 
 
 def to_pdf_method_manager(frame):
@@ -85,19 +96,28 @@ def to_pdf_method_manager(frame):
 
     to_pdf_libreoffice = tk.Radiobutton(
         frame, text="LibreOffice", variable=TO_PDF_METHOD, value="libreoffice")
-    to_pdf_libreoffice.grid(row=2, column=1, pady=2)
+    to_pdf_libreoffice.grid(row=3, column=1, pady=2)
 
     to_pdf_powerpoint = tk.Radiobutton(
         frame, text="PowerPoint", variable=TO_PDF_METHOD, value="powerpoint")
-    to_pdf_powerpoint.grid(row=3, column=1, pady=2)
+    to_pdf_powerpoint.grid(row=4, column=1, pady=2)
 
 
-certified_list_manager(frame)
-template_manager(frame)
-autogen_manager(frame)
-to_pdf_method_manager(frame)
+def run():
+    root = tk.Tk()
+    root.title("PyCertGen")
+    root.geometry("400x230")  # Adjust the width as needed
 
-submit_button = tk.Button(root, text="Generate", command=submit)
-submit_button.pack(pady=10)
+    frame = tk.Frame(root)
+    frame.pack()
 
-root.mainloop()
+    certified_list_manager(frame)
+    template_manager(frame)
+    output_manager(frame)
+    autogen_manager(frame)
+    to_pdf_method_manager(frame)
+
+    submit_button = tk.Button(root, text="Generate", command=submit)
+    submit_button.pack(pady=10)
+
+    root.mainloop()
