@@ -1,6 +1,6 @@
 import tkinter as tk
-import generator
 from tkinter import filedialog, messagebox
+from . import generator
 
 
 CERTIFIED_LIST_ENTRY = None

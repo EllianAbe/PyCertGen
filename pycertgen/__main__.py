@@ -1,8 +1,7 @@
 #! python3
 
 import argparse
-import generator
-import gui
+from . import gui, generator
 
 
 def parse_arguments():

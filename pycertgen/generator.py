@@ -1,6 +1,5 @@
 from typing import Literal
-import ppt_to_pdf
-import ppt_manager
+from . import ppt_to_pdf, ppt_manager
 import pandas as pd
 import os
 
