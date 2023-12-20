@@ -10,7 +10,7 @@ $ pip install pycertgen
 ## Usage
 For gui usage:
 ```shell
-python3 pycertgen
+python3 pycertgen --show_gui
 ```
 
 for cli usage:
