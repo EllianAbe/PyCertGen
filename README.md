@@ -4,7 +4,7 @@ Looking to generate multiple certificates with just a single-line command? PyCer
 
 ## Installation
 ```shell
-$ pip install pycertgen
+$ pip install PyCertGen
 ```
 
 ## Usage
