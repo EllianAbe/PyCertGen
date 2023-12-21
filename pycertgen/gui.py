@@ -106,7 +106,7 @@ def to_pdf_method_manager(frame):
 def run():
     root = tk.Tk()
     root.title("PyCertGen")
-    root.geometry("400x230")  # Adjust the width as needed
+    root.geometry("400x280")  # Adjust the width as needed
 
     frame = tk.Frame(root)
     frame.pack()
